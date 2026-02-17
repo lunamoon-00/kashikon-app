@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { Check, X, Settings } from 'lucide-react';
 import foodCategories from './foodCategories';
 
-const SettingsPage = React.memo(({ preferences, setPreferences, onShowManual }) => {
-  const [selectedCategory, setSelectedCategory] = useState('肉類');
-  const [preferenceMode, setPreferenceMode] = useState('likes');
+const SettingsPage = React.memo(({ preferences, setPreferences, onShowManual, selectedCategory, setSelectedCategory, preferenceMode, setPreferenceMode }) => {
   const [budgetInput, setBudgetInput] = useState(null);
 
   const allergens = [

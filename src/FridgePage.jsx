@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Sparkles, Trash2 } from 'lucide-react';
 import foodCategories from './foodCategories';
 
-const FridgePage = ({ fridge, setFridge }) => {
-  const [selectedCategory, setSelectedCategory] = useState('肉類');
+const FridgePage = ({ fridge, setFridge, selectedCategory, setSelectedCategory }) => {
 
   const addToFridge = (item) => {
     if (!fridge.find(f => f.item === item)) {

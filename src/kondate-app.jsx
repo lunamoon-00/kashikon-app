@@ -28,6 +28,9 @@ const KondateApp = () => {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [showManual, setShowManual] = useState(false);
   const handleShowManual = useCallback(() => setShowManual(true), []);
+  const [fridgeCategory, setFridgeCategory] = useState('肉類');
+  const [settingsCategory, setSettingsCategory] = useState('肉類');
+  const [preferenceMode, setPreferenceMode] = useState('likes');
 
   // レシピサイト一覧
   const recipeSites = [
@@ -986,11 +989,11 @@ JSONフォーマットで、以下の構造で返してください（JSON以外
       </div>
 
       {currentPage === 'home' && <HomePage />}
-      {currentPage === 'fridge' && <FridgePage fridge={fridge} setFridge={setFridge} />}
+      {currentPage === 'fridge' && <FridgePage fridge={fridge} setFridge={setFridge} selectedCategory={fridgeCategory} setSelectedCategory={setFridgeCategory} />}
       {currentPage === 'flyer' && <FlyerPage />}
       {currentPage === 'shopping' && <ShoppingPage />}
       {currentPage === 'account' && <AccountBookPage />}
-      {currentPage === 'settings' && <SettingsPage preferences={preferences} setPreferences={setPreferences} onShowManual={handleShowManual} />}
+      {currentPage === 'settings' && <SettingsPage preferences={preferences} setPreferences={setPreferences} onShowManual={handleShowManual} selectedCategory={settingsCategory} setSelectedCategory={setSettingsCategory} preferenceMode={preferenceMode} setPreferenceMode={setPreferenceMode} />}
 
       <NavBar />
 
