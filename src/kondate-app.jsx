@@ -1013,20 +1013,83 @@ JSONフォーマットで、以下の構造で返してください（JSON以外
                 <X size={24} />
               </button>
             </div>
-            <div className="space-y-4 text-sm text-gray-700">
-              <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 font-mono text-xs whitespace-pre">
-{`【アプリの流れ】
-設定 → 冷蔵庫/チラシ → ホーム → 献立選択 → 買い物リスト → 家計簿
-
-【各画面】
-• ホーム: 献立提案・選択
-• 冷蔵庫: 食材登録
-• チラシ: 撮影で価格読み取り
-• 買い物: チェックで家計簿へ記録
-• 家計簿: 支出確認
-• 設定: 人数・予算・好み`}
+            <div className="space-y-5 text-sm text-gray-700">
+              <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 text-xs">
+                <div className="font-bold text-orange-800 mb-2">アプリの流れ</div>
+                <div className="text-orange-700">設定 → 冷蔵庫/チラシ → ホーム → 献立選択 → 買い物リスト → 家計簿</div>
               </div>
-              <p className="font-semibold">💡 詳細は MANUAL.md をご確認ください</p>
+
+              <div>
+                <h4 className="font-bold text-gray-800 mb-2 text-base">各画面の使い方</h4>
+                <div className="space-y-3">
+                  <div className="bg-blue-50 border border-blue-200 rounded-xl p-3">
+                    <div className="font-bold text-blue-800 mb-1">ホーム</div>
+                    <ul className="text-xs text-blue-700 space-y-0.5 list-disc list-inside">
+                      <li>今月の食費と残り予算を確認</li>
+                      <li>「今日の献立候補を見る」でAIが朝・昼・夕の献立を提案</li>
+                      <li>「冷蔵庫の食材で献立提案」で冷蔵庫の食材を優先</li>
+                      <li>献立タップでレシピサイト検索</li>
+                    </ul>
+                  </div>
+                  <div className="bg-cyan-50 border border-cyan-200 rounded-xl p-3">
+                    <div className="font-bold text-cyan-800 mb-1">冷蔵庫</div>
+                    <ul className="text-xs text-cyan-700 space-y-0.5 list-disc list-inside">
+                      <li>カテゴリから食材を選んで追加</li>
+                      <li>分量を入力可能</li>
+                      <li>登録食材は献立提案で優先使用</li>
+                    </ul>
+                  </div>
+                  <div className="bg-pink-50 border border-pink-200 rounded-xl p-3">
+                    <div className="font-bold text-pink-800 mb-1">チラシ</div>
+                    <ul className="text-xs text-pink-700 space-y-0.5 list-disc list-inside">
+                      <li>チラシを撮影 or ファイル選択で価格読み取り</li>
+                      <li>気になる商品を買い物リストに追加</li>
+                    </ul>
+                  </div>
+                  <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-3">
+                    <div className="font-bold text-indigo-800 mb-1">買い物リスト</div>
+                    <ul className="text-xs text-indigo-700 space-y-0.5 list-disc list-inside">
+                      <li>献立から自動生成された食材一覧</li>
+                      <li>チェックで家計簿に記録するものを選択</li>
+                      <li>「選択分を家計簿へ」で選んだ分だけ記録</li>
+                      <li>「全リストを買い物完了として記録」で一括記録</li>
+                    </ul>
+                  </div>
+                  <div className="bg-amber-50 border border-amber-200 rounded-xl p-3">
+                    <div className="font-bold text-amber-800 mb-1">家計簿</div>
+                    <ul className="text-xs text-amber-700 space-y-0.5 list-disc list-inside">
+                      <li>月ごとの支出を確認</li>
+                      <li>買い物リストから記録された支出が表示</li>
+                    </ul>
+                  </div>
+                  <div className="bg-purple-50 border border-purple-200 rounded-xl p-3">
+                    <div className="font-bold text-purple-800 mb-1">設定</div>
+                    <ul className="text-xs text-purple-700 space-y-0.5 list-disc list-inside">
+                      <li>人数（1〜10人）・月の食費予算を設定</li>
+                      <li>食生活モード：バランス型・ダイエット・筋トレ・健康志向・ファミリー</li>
+                      <li>好きな食材・苦手な食材・アレルギー除外を設定</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="font-bold text-gray-800 mb-2 text-base">よくある使い方</h4>
+                <div className="space-y-3">
+                  <div className="bg-green-50 border border-green-200 rounded-xl p-3">
+                    <div className="font-bold text-green-800 mb-1 text-xs">献立を決めてから買い物</div>
+                    <div className="text-xs text-green-700">設定 → ホームで献立提案 → 献立選択 → 買い物リスト作成 → 家計簿へ記録</div>
+                  </div>
+                  <div className="bg-green-50 border border-green-200 rounded-xl p-3">
+                    <div className="font-bold text-green-800 mb-1 text-xs">冷蔵庫の食材を活かす</div>
+                    <div className="text-xs text-green-700">冷蔵庫に食材登録 → 「冷蔵庫の食材で献立提案」 → 足りない材料が買い物リストに</div>
+                  </div>
+                  <div className="bg-green-50 border border-green-200 rounded-xl p-3">
+                    <div className="font-bold text-green-800 mb-1 text-xs">チラシの特売を活用</div>
+                    <div className="text-xs text-green-700">チラシ撮影 → 読み取った商品を買い物リストに追加 → 家計簿に記録</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
