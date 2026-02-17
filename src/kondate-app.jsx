@@ -1016,7 +1016,8 @@ JSONフォーマットで、以下の構造で返してください（JSON以外
             <div className="space-y-5 text-sm text-gray-700">
               <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 text-xs">
                 <div className="font-bold text-orange-800 mb-2">アプリの流れ</div>
-                <div className="text-orange-700">設定 → 冷蔵庫/チラシ → ホーム → 献立選択 → 買い物リスト → 家計簿</div>
+                <div className="text-orange-700 mb-2">設定 → 冷蔵庫/チラシ → ホーム → 献立選択 → 買い物リスト → 家計簿</div>
+                <div className="text-orange-600">まずは設定で人数や好みを登録し、冷蔵庫に食材を入れてからホームで献立を提案してもらいましょう。</div>
               </div>
 
               <div>
@@ -1024,50 +1025,63 @@ JSONフォーマットで、以下の構造で返してください（JSON以外
                 <div className="space-y-3">
                   <div className="bg-blue-50 border border-blue-200 rounded-xl p-3">
                     <div className="font-bold text-blue-800 mb-1">ホーム</div>
+                    <p className="text-xs text-blue-600 mb-2">メインの画面です。AIに献立を提案してもらい、朝・昼・夕の好きなメニューを選びましょう。</p>
                     <ul className="text-xs text-blue-700 space-y-0.5 list-disc list-inside">
-                      <li>今月の食費と残り予算を確認</li>
-                      <li>「今日の献立候補を見る」でAIが朝・昼・夕の献立を提案</li>
-                      <li>「冷蔵庫の食材で献立提案」で冷蔵庫の食材を優先</li>
-                      <li>献立タップでレシピサイト検索</li>
+                      <li>今月の食費と残り予算がひと目でわかります</li>
+                      <li>「今日の献立候補を見る」をタップすると、あなたの好みに合った献立をAIが提案します</li>
+                      <li>「冷蔵庫の食材で献立提案」を使うと、今ある食材を優先的に使った献立が出ます</li>
+                      <li>提案された献立をタップすると、クックパッドやクラシルなどのレシピサイトで作り方を検索できます</li>
+                      <li>朝・昼・夕それぞれで好きな献立を選んだら「買い物リストを作成」をタップしましょう</li>
                     </ul>
                   </div>
                   <div className="bg-cyan-50 border border-cyan-200 rounded-xl p-3">
                     <div className="font-bold text-cyan-800 mb-1">冷蔵庫</div>
+                    <p className="text-xs text-cyan-600 mb-2">今ある食材を登録しておくと、献立提案に反映されます。無駄なく食材を使い切りましょう。</p>
                     <ul className="text-xs text-cyan-700 space-y-0.5 list-disc list-inside">
-                      <li>カテゴリから食材を選んで追加</li>
-                      <li>分量を入力可能</li>
-                      <li>登録食材は献立提案で優先使用</li>
+                      <li>「肉類」「魚介類」「野菜」などのカテゴリから食材をタップして追加します</li>
+                      <li>追加した食材には分量（例：「200g」「半分」）を入力できます</li>
+                      <li>登録した食材はホームの「冷蔵庫の食材で献立提案」で優先的に使われます</li>
+                      <li>不要になった食材はゴミ箱アイコンで削除できます</li>
                     </ul>
                   </div>
                   <div className="bg-pink-50 border border-pink-200 rounded-xl p-3">
                     <div className="font-bold text-pink-800 mb-1">チラシ</div>
+                    <p className="text-xs text-pink-600 mb-2">スーパーのチラシを撮影するだけで、商品名と価格をAIが自動で読み取ります。</p>
                     <ul className="text-xs text-pink-700 space-y-0.5 list-disc list-inside">
-                      <li>チラシを撮影 or ファイル選択で価格読み取り</li>
-                      <li>気になる商品を買い物リストに追加</li>
+                      <li>「チラシを撮影」ボタンからカメラで撮影、またはファイルを選択します</li>
+                      <li>AIが自動で商品名と価格を認識してリスト表示します</li>
+                      <li>気になる特売品は買い物リストに追加して、お得に買い物しましょう</li>
                     </ul>
                   </div>
                   <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-3">
                     <div className="font-bold text-indigo-800 mb-1">買い物リスト</div>
+                    <p className="text-xs text-indigo-600 mb-2">献立に必要な食材が自動でリストになります。買い物後は家計簿に記録しましょう。</p>
                     <ul className="text-xs text-indigo-700 space-y-0.5 list-disc list-inside">
-                      <li>献立から自動生成された食材一覧</li>
-                      <li>チェックで家計簿に記録するものを選択</li>
-                      <li>「選択分を家計簿へ」で選んだ分だけ記録</li>
-                      <li>「全リストを買い物完了として記録」で一括記録</li>
+                      <li>ホームで献立を選んで「買い物リストを作成」すると、必要な食材と予想金額が表示されます</li>
+                      <li>冷蔵庫にある食材は自動で除外されるので、本当に買うものだけが表示されます</li>
+                      <li>チェックボックスで実際に買ったものだけを選んで「選択分を家計簿へ」で記録できます</li>
+                      <li>全部買った場合は「全リストを買い物完了として記録」で一括記録もできます</li>
                     </ul>
                   </div>
                   <div className="bg-amber-50 border border-amber-200 rounded-xl p-3">
                     <div className="font-bold text-amber-800 mb-1">家計簿</div>
+                    <p className="text-xs text-amber-600 mb-2">食費の支出を月ごとに管理できます。予算オーバーを防ぎましょう。</p>
                     <ul className="text-xs text-amber-700 space-y-0.5 list-disc list-inside">
-                      <li>月ごとの支出を確認</li>
-                      <li>買い物リストから記録された支出が表示</li>
+                      <li>今月の合計支出と、設定した予算に対する残りがグラフで表示されます</li>
+                      <li>買い物リストから記録した支出が日付ごとに一覧で確認できます</li>
+                      <li>月ごとの履歴も見られるので、食費の傾向を把握できます</li>
                     </ul>
                   </div>
                   <div className="bg-purple-50 border border-purple-200 rounded-xl p-3">
                     <div className="font-bold text-purple-800 mb-1">設定</div>
+                    <p className="text-xs text-purple-600 mb-2">あなたの家族構成や好みに合わせて、献立提案をカスタマイズできます。</p>
                     <ul className="text-xs text-purple-700 space-y-0.5 list-disc list-inside">
-                      <li>人数（1〜10人）・月の食費予算を設定</li>
-                      <li>食生活モード：バランス型・ダイエット・筋トレ・健康志向・ファミリー</li>
-                      <li>好きな食材・苦手な食材・アレルギー除外を設定</li>
+                      <li>「何人分？」で家族の人数を設定すると、その人数に合わせた分量で献立が提案されます</li>
+                      <li>「月の食費予算」を設定すると、予算内に収まるよう献立を調整します</li>
+                      <li>「食生活モード」でバランス型・ダイエット・筋トレ・健康志向・ファミリーから選べます</li>
+                      <li>「好き」タブ：よく使いたい食材を選ぶと、積極的に献立に取り入れます</li>
+                      <li>「苦手」タブ：避けたい食材を選ぶと、献立に出てこなくなります</li>
+                      <li>「除外」タブ：アレルギーのある食材を選ぶと、絶対に使われません</li>
                     </ul>
                   </div>
                 </div>
@@ -1077,16 +1091,19 @@ JSONフォーマットで、以下の構造で返してください（JSON以外
                 <h4 className="font-bold text-gray-800 mb-2 text-base">よくある使い方</h4>
                 <div className="space-y-3">
                   <div className="bg-green-50 border border-green-200 rounded-xl p-3">
-                    <div className="font-bold text-green-800 mb-1 text-xs">献立を決めてから買い物</div>
-                    <div className="text-xs text-green-700">設定 → ホームで献立提案 → 献立選択 → 買い物リスト作成 → 家計簿へ記録</div>
+                    <div className="font-bold text-green-800 mb-1 text-xs">パターン1: 献立を決めてから買い物</div>
+                    <div className="text-xs text-green-700 mb-1">今日何を作るか決まっていない時におすすめです。</div>
+                    <div className="text-xs text-green-600">設定で好みを登録 → ホームで「献立候補を見る」→ 朝昼夕を選択 → 「買い物リストを作成」→ 買い物 → 家計簿へ記録</div>
                   </div>
                   <div className="bg-green-50 border border-green-200 rounded-xl p-3">
-                    <div className="font-bold text-green-800 mb-1 text-xs">冷蔵庫の食材を活かす</div>
-                    <div className="text-xs text-green-700">冷蔵庫に食材登録 → 「冷蔵庫の食材で献立提案」 → 足りない材料が買い物リストに</div>
+                    <div className="font-bold text-green-800 mb-1 text-xs">パターン2: 冷蔵庫の食材を使い切る</div>
+                    <div className="text-xs text-green-700 mb-1">冷蔵庫に食材が余っている時に便利です。</div>
+                    <div className="text-xs text-green-600">冷蔵庫に今ある食材を登録 → ホームで「冷蔵庫の食材で献立提案」→ 足りない材料だけ買い物リストに</div>
                   </div>
                   <div className="bg-green-50 border border-green-200 rounded-xl p-3">
-                    <div className="font-bold text-green-800 mb-1 text-xs">チラシの特売を活用</div>
-                    <div className="text-xs text-green-700">チラシ撮影 → 読み取った商品を買い物リストに追加 → 家計簿に記録</div>
+                    <div className="font-bold text-green-800 mb-1 text-xs">パターン3: チラシの特売を活用</div>
+                    <div className="text-xs text-green-700 mb-1">お得な食材を見つけた時に使いましょう。</div>
+                    <div className="text-xs text-green-600">チラシ画面で撮影 → 読み取った商品を買い物リストに追加 → 買い物後に家計簿へ記録</div>
                   </div>
                 </div>
               </div>
