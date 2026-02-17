@@ -46,6 +46,8 @@ code {
 .flex-1 { flex: 1; }
 .flex-col { flex-direction: column; }
 .flex-wrap { flex-wrap: wrap; }
+.flex-shrink-0 { flex-shrink: 0; }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* Grid */
 .grid { display: grid; }
@@ -93,6 +95,7 @@ code {
 /* テキスト */
 .text-xs { font-size: 0.75rem; }
 .text-sm { font-size: 0.875rem; }
+.text-base { font-size: 1rem; }
 .text-lg { font-size: 1.125rem; }
 .text-xl { font-size: 1.25rem; }
 .text-2xl { font-size: 1.5rem; }
@@ -579,4 +582,12 @@ button:active {
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   position: relative;
   overflow: hidden;
+}
+
+/* 数値入力スピナー（予算など） */
+.kondate-input-number::-webkit-outer-spin-button,
+.kondate-input-number::-webkit-inner-spin-button {
+  opacity: 1;
+  height: 2.5rem;
+  padding: 0 0.5rem;
 }

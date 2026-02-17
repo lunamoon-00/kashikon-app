@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Camera, ShoppingCart, Calendar, Settings, AlertTriangle, Plus, Trash2, Check, X, ChefHat, Sparkles, DollarSign } from 'lucide-react';
+import FridgePage from './FridgePage';
+import SettingsPage from './SettingsPage';
 
 const KondateApp = () => {
   const [currentPage, setCurrentPage] = useState('home');
@@ -24,6 +26,8 @@ const KondateApp = () => {
   });
   const [showRecipeModal, setShowRecipeModal] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [showManual, setShowManual] = useState(false);
+  const handleShowManual = useCallback(() => setShowManual(true), []);
 
   // レシピサイト一覧
   const recipeSites = [
@@ -44,28 +48,6 @@ const KondateApp = () => {
     const query = encodeURIComponent(selectedRecipe);
     window.open(site.url + query, '_blank', 'noopener,noreferrer');
     setShowRecipeModal(false);
-  };
-
-  // 食材データベース
-  const foodCategories = {
-    '肉類': ['豚肉', '豚バラ', '豚ロース', '豚ひき肉', '鶏肉', '鶏もも肉', '鶏むね肉', '鶏ささみ', '鶏ひき肉', '手羽先', '手羽元', '牛肉', '牛バラ', '牛もも肉', '牛ひき肉', 'ステーキ肉', 'すき焼き肉', '合挽き肉', 'ベーコン', 'ハム', 'ソーセージ', 'ウインナー', 'ラム肉', '鴨肉', 'レバー', 'ホルモン'],
-    '魚介類': ['サーモン', 'マグロ', 'カツオ', 'サバ', 'イワシ', 'アジ', 'サンマ', 'ブリ', 'タイ', '鮭', 'タラ', 'ホッケ', 'メカジキ', 'エビ', '大エビ', '桜エビ', 'イカ', 'タコ', 'ホタテ', 'アサリ', 'シジミ', 'ハマグリ', 'カキ', 'ホヤ', 'ウニ', 'イクラ', 'タラコ', '明太子', 'しらす', 'ちくわ', 'かまぼこ', 'さつま揚げ', 'ツナ缶', 'サバ缶'],
-    '葉物野菜': ['キャベツ', '白菜', 'レタス', 'サニーレタス', 'ほうれん草', '小松菜', 'チンゲン菜', '水菜', '春菊', 'ルッコラ', 'クレソン', 'パクチー', 'バジル', 'パセリ', '大葉', 'ニラ', 'ネギ', '長ネギ', '万能ねぎ', 'セロリ', '三つ葉'],
-    '実野菜': ['トマト', 'ミニトマト', 'きゅうり', 'なす', 'ピーマン', 'パプリカ', 'ししとう', 'オクラ', 'ゴーヤ', 'ズッキーニ', 'かぼちゃ', 'とうもろこし', 'アスパラ', 'ブロッコリー', 'カリフラワー', 'スナップエンドウ', 'さやえんどう', 'そら豆', '枝豆', 'もやし'],
-    '根菜': ['大根', '人参', 'じゃがいも', 'さつまいも', '里芋', '長芋', '山芋', '玉ねぎ', '新玉ねぎ', '赤玉ねぎ', 'ごぼう', 'れんこん', 'かぶ', '生姜', 'にんにく', 'ラディッシュ', 'ビーツ'],
-    '果物': ['りんご', 'バナナ', 'みかん', 'オレンジ', 'グレープフルーツ', 'レモン', 'ライム', 'いちご', 'ブルーベリー', 'ラズベリー', 'ぶどう', '巨峰', 'シャインマスカット', 'キウイ', 'パイナップル', 'メロン', 'スイカ', '桃', 'さくらんぼ', 'プラム', '梨', '柿', 'いちじく', 'マンゴー', 'アボカド'],
-    '卵・乳製品': ['卵', '牛乳', '低脂肪乳', '豆乳', 'アーモンドミルク', 'ヨーグルト', 'ギリシャヨーグルト', '飲むヨーグルト', 'チーズ', 'モッツァレラチーズ', 'パルメザンチーズ', 'クリームチーズ', 'カマンベール', 'チェダーチーズ', 'バター', '生クリーム', 'サワークリーム', '練乳'],
-    '豆・豆腐': ['豆腐', '絹豆腐', '木綿豆腐', '納豆', 'ひきわり納豆', '油揚げ', '厚揚げ', 'がんもどき', '高野豆腐', '湯葉', '豆乳', 'おから', '枝豆', '大豆', 'ひよこ豆', 'レンズ豆', 'いんげん豆', '小豆'],
-    'きのこ': ['しめじ', 'えのき', 'しいたけ', 'まいたけ', 'エリンギ', 'なめこ', 'マッシュルーム', 'エリンギ', 'きくらげ', '松茸'],
-    '海藻': ['わかめ', '昆布', 'ひじき', 'もずく', 'めかぶ', '海苔', '焼き海苔', '味付け海苔', '寒天', 'ところてん'],
-    '麺類': ['うどん', 'そば', 'そうめん', 'ひやむぎ', 'ラーメン', 'インスタント麺', 'パスタ', 'スパゲティ', 'ペンネ', 'マカロニ', 'フェットチーネ', 'ビーフン', '春雨', 'しらたき', 'くずきり'],
-    '米・パン': ['白米', '玄米', '雑穀米', 'もち米', '餅', '食パン', 'ロールパン', 'フランスパン', 'ベーグル', 'イングリッシュマフィン', 'クロワッサン', 'ナン', 'ピタパン', 'トルティーヤ'],
-    '粉物': ['小麦粉', '強力粉', '薄力粉', '片栗粉', 'コーンスターチ', 'ホットケーキミックス', 'お好み焼き粉', 'たこ焼き粉', 'から揚げ粉', '天ぷら粉', 'パン粉'],
-    '調味料': ['醤油', '濃口醤油', '薄口醤油', '味噌', '赤味噌', '白味噌', '合わせ味噌', 'みりん', '料理酒', '日本酒', '酢', '米酢', '穀物酢', 'リンゴ酢', 'ポン酢', 'めんつゆ', '白だし', '顆粒だし', '鶏ガラスープの素', 'コンソメ', 'ブイヨン', '塩', '砂糖', '三温糖', 'きび糖', 'はちみつ', 'メープルシロップ'],
-    '洋風調味料': ['ケチャップ', 'マヨネーズ', 'マスタード', '粒マスタード', 'ウスターソース', '中濃ソース', 'とんかつソース', 'オイスターソース', 'タバスコ', 'チリソース', 'ドレッシング', 'オリーブオイル', 'ごま油', 'サラダ油', 'バルサミコ酢'],
-    '香辛料': ['胡椒', '黒胡椒', '一味唐辛子', '七味唐辛子', '山椒', 'わさび', 'からし', '生姜チューブ', 'にんにくチューブ', 'カレー粉', 'ターメリック', 'クミン', 'コリアンダー', 'ナツメグ', 'シナモン', 'ローリエ', 'オレガノ', 'バジル', 'タイム', 'ローズマリー', 'パプリカパウダー'],
-    '加工食品': ['冷凍餃子', '冷凍シュウマイ', '冷凍唐揚げ', '冷凍コロッケ', 'インスタントカレー', 'レトルトカレー', 'パスタソース', 'ミートソース', 'ホワイトソース', 'カレールー', 'シチュールー', 'ハヤシライスルー', 'ふりかけ', '漬物', 'キムチ', '梅干し'],
-    'その他': ['こんにゃく', '糸こんにゃく', '春雨', 'ナッツ', 'アーモンド', 'くるみ', 'カシューナッツ', 'ピーナッツ', 'ドライフルーツ', 'レーズン', 'プルーン']
   };
 
   // 月間支出の計算
@@ -443,381 +425,6 @@ JSONフォーマットで、以下の構造で返してください（JSON以外
     );
   };
 
-  // 冷蔵庫ページ
-  const FridgePage = () => {
-    const [selectedCategory, setSelectedCategory] = useState('肉類');
-
-    const addToFridge = (item) => {
-      if (!fridge.find(f => f.item === item)) {
-        setFridge([...fridge, { item, amount: '', addedDate: new Date().toISOString() }]);
-      }
-    };
-
-    const removeFromFridge = (item) => {
-      setFridge(fridge.filter(f => f.item !== item));
-    };
-
-    const updateAmount = (item, amount) => {
-      setFridge(fridge.map(f => f.item === item ? {...f, amount} : f));
-    };
-
-    const isInFridge = (item) => {
-      return fridge.some(f => f.item === item);
-    };
-
-    return (
-      <div className="p-6 space-y-6 pb-28">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg" style={{ background: 'linear-gradient(135deg, #22d3ee, #3b82f6)' }}>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
-              <rect x="4" y="2" width="16" height="20" rx="2"/>
-              <line x1="4" y1="10" x2="20" y2="10"/>
-              <line x1="7" y1="5" x2="7" y2="8"/>
-              <line x1="7" y1="13" x2="7" y2="18"/>
-            </svg>
-          </div>
-          <div>
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">冷蔵庫</h2>
-            <p className="text-sm text-gray-500 mt-0.5">在庫 {fridge.length}個</p>
-          </div>
-        </div>
-
-        {fridge.length > 0 && (
-          <div className="bg-gradient-to-br from-cyan-50 to-blue-50 border-2 border-cyan-200 p-5 rounded-3xl shadow-sm">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-cyan-900 flex items-center gap-2">
-                <Sparkles size={18} className="text-cyan-500" />
-                登録済み
-              </h3>
-              <button
-                onClick={() => setFridge([])}
-                className="text-xs text-red-500 hover:text-red-700 font-medium transition-colors"
-              >
-                全て削除
-              </button>
-            </div>
-            <div className="space-y-2">
-              {fridge.map((f, i) => (
-                <div key={i} className="flex items-center gap-2 p-3 bg-white/80 backdrop-blur rounded-xl border border-cyan-100 shadow-sm">
-                  <span className="flex-1 font-medium text-gray-800">{f.item}</span>
-                  <input
-                    type="text"
-                    value={f.amount}
-                    onChange={(e) => updateAmount(f.item, e.target.value)}
-                    placeholder="分量"
-                    className="w-24 px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 bg-white"
-                  />
-                  <button
-                    onClick={() => removeFromFridge(f.item)}
-                    className="text-red-400 hover:text-red-600 transition-colors"
-                  >
-                    <Trash2 size={18} />
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <div className="bg-white border-2 border-gray-100 p-5 rounded-3xl shadow-sm">
-          <h3 className="font-bold mb-4 text-gray-800">食材を追加</h3>
-          
-          <div className="flex overflow-x-auto gap-2 mb-5 pb-2 scrollbar-hide">
-            {Object.keys(foodCategories).map(category => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`kondate-category-btn ${selectedCategory === category ? 'selected' : ''}`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-
-          <div className="kondate-food-grid">
-            {foodCategories[selectedCategory].map(food => (
-              <button
-                key={food}
-                onClick={() => addToFridge(food)}
-                disabled={isInFridge(food)}
-                className="kondate-food-btn"
-              >
-                <span className="text-sm font-medium">{food}</span>
-                {isInFridge(food) && (
-                  <span className="ml-2 text-xs text-green-600">✓</span>
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  // 設定ページ
-  const SettingsPage = () => {
-    const [selectedCategory, setSelectedCategory] = useState('肉類');
-    const [preferenceMode, setPreferenceMode] = useState('likes');
-
-    // 主要アレルゲン
-    const allergens = [
-      '卵', '乳', '小麦', 'そば', '落花生', 'えび', 'かに',
-      '大豆', '鶏肉', '豚肉', '牛肉', 'さけ', 'さば', 'いか', 'いくら',
-      'オレンジ', 'キウイ', 'バナナ', 'もも', 'りんご', 'くるみ', 'ゼラチン'
-    ];
-
-    const toggleFood = (food) => {
-      if (preferenceMode === 'likes') {
-        if (preferences.likes.includes(food)) {
-          setPreferences({...preferences, likes: preferences.likes.filter(f => f !== food)});
-        } else {
-          setPreferences({...preferences, likes: [...preferences.likes, food]});
-        }
-      } else if (preferenceMode === 'dislikes') {
-        if (preferences.dislikes.includes(food)) {
-          setPreferences({...preferences, dislikes: preferences.dislikes.filter(f => f !== food)});
-        } else {
-          setPreferences({...preferences, dislikes: [...preferences.dislikes, food]});
-        }
-      } else {
-        // allergies
-        if (preferences.allergies.includes(food)) {
-          setPreferences({...preferences, allergies: preferences.allergies.filter(f => f !== food)});
-        } else {
-          setPreferences({...preferences, allergies: [...preferences.allergies, food]});
-        }
-      }
-    };
-
-    const isSelected = (food) => {
-      if (preferenceMode === 'likes') return preferences.likes.includes(food);
-      if (preferenceMode === 'dislikes') return preferences.dislikes.includes(food);
-      return preferences.allergies.includes(food);
-    };
-
-    return (
-      <div className="p-6 space-y-6 pb-28">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg" style={{ background: 'linear-gradient(135deg, #a855f7, #ec4899)' }}>
-            <Settings size={28} color="white" strokeWidth={2.5} />
-          </div>
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">設定</h2>
-        </div>
-        
-        <div className="bg-white border-2 border-gray-100 p-5 rounded-3xl shadow-sm">
-          <label className="block text-base font-bold mb-3 text-gray-800">何人分？</label>
-          <input
-            type="number"
-            value={preferences.servings}
-            onChange={(e) => setPreferences({...preferences, servings: parseInt(e.target.value)})}
-            className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-400 text-lg font-semibold"
-            min="1"
-            max="10"
-          />
-        </div>
-
-        <div className="bg-white border-2 border-gray-100 p-5 rounded-3xl shadow-sm">
-          <label className="block text-base font-bold mb-3 text-gray-800">月の食費予算（円）</label>
-          <input
-            type="text"
-            inputMode="numeric"
-            pattern="[0-9]*"
-            value={preferences.monthlyBudget === 0 ? '' : preferences.monthlyBudget}
-            onChange={(e) => {
-              const cleaned = e.target.value.replace(/\D/g, '');
-              setPreferences({...preferences, monthlyBudget: cleaned === '' ? 0 : parseInt(cleaned, 10)});
-            }}
-            placeholder="例: 50000"
-            className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-400 text-lg font-semibold"
-          />
-        </div>
-
-        <div className="bg-white border-2 border-gray-100 p-5 rounded-3xl shadow-sm">
-          <h3 className="text-lg font-bold mb-1 text-gray-800">食生活モード</h3>
-          <p className="text-sm text-gray-500 mb-4">目指したい食生活に合わせて献立を提案します</p>
-          <div className="space-y-3">
-            {[
-              { value: 'balanced', label: 'バランス型', icon: '⚖️', desc: '定番とおしゃれな料理をバランスよく' },
-              { value: 'diet', label: 'ダイエット', icon: '🥗', desc: '低カロリー・高タンパク質中心' },
-              { value: 'muscle', label: '筋トレ', icon: '💪', desc: '高タンパク質で筋肉をサポート' },
-              { value: 'healthy', label: '健康志向', icon: '🌱', desc: '野菜多め、栄養バランス重視' },
-              { value: 'family', label: 'ファミリー', icon: '👨‍👩‍👧‍👦', desc: '子供も喜ぶ定番料理中心' }
-            ].map(mode => (
-              <button
-                key={mode.value}
-                onClick={() => setPreferences({...preferences, lifestyleMode: mode.value})}
-                className={`kondate-mode-card ${preferences.lifestyleMode === mode.value ? 'selected' : ''}`}
-              >
-                <span className="mode-icon">{mode.icon}</span>
-                <div className="flex-1 text-left">
-                  <div className="font-bold text-gray-800">{mode.label}</div>
-                  <div className="text-sm text-gray-500 mt-0.5">{mode.desc}</div>
-                </div>
-                {preferences.lifestyleMode === mode.value && (
-                  <Check color="#9333ea" size={28} strokeWidth={3} />
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="bg-white border-2 border-gray-100 p-5 rounded-3xl shadow-sm">
-          <h3 className="text-lg font-bold mb-4 text-gray-800">食材の設定</h3>
-          <p className="text-sm text-gray-500 mb-4">好き・苦手・アレルギーを設定して献立をパーソナライズ</p>
-          
-          <div className="flex gap-3 mb-5">
-            <button
-              onClick={() => setPreferenceMode('likes')}
-              className={`kondate-pref-tab ${preferenceMode === 'likes' ? 'active' : ''}`}
-              style={preferenceMode === 'likes' ? { background: 'linear-gradient(90deg, #4ade80, #10b981)', color: 'white' } : {}}
-            >
-              <span>好き</span>
-              <span className="tab-count">{preferences.likes.length}件</span>
-            </button>
-            <button
-              onClick={() => setPreferenceMode('dislikes')}
-              className={`kondate-pref-tab ${preferenceMode === 'dislikes' ? 'active' : ''}`}
-              style={preferenceMode === 'dislikes' ? { background: 'linear-gradient(90deg, #fb7185, #ec4899)', color: 'white' } : {}}
-            >
-              <span>苦手</span>
-              <span className="tab-count">{preferences.dislikes.length}件</span>
-            </button>
-            <button
-              onClick={() => setPreferenceMode('allergies')}
-              className={`kondate-pref-tab ${preferenceMode === 'allergies' ? 'active' : ''}`}
-              style={preferenceMode === 'allergies' ? { background: 'linear-gradient(90deg, #fb923c, #ef4444)', color: 'white' } : {}}
-            >
-              <span>🚨 除外</span>
-              <span className="tab-count">{preferences.allergies.length}件</span>
-            </button>
-          </div>
-
-          {preferenceMode === 'allergies' ? (
-            <>
-              <div className="bg-orange-50 border-2 border-orange-200 p-4 rounded-xl mb-4">
-                <p className="text-sm text-orange-800 font-medium">⚠️ これらの食材を含む献立は提案されません</p>
-              </div>
-              <div className="grid grid-cols-2 gap-3 max-h-80 overflow-y-auto">
-                {allergens.map(food => (
-                  <label
-                    key={food}
-                    className={`kondate-food-card ${isSelected(food) ? 'selected allergies' : ''}`}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={isSelected(food)}
-                      onChange={() => toggleFood(food)}
-                      className="sr-only"
-                    />
-                    <span className="flex-1 font-medium text-gray-800">{food}</span>
-                    {isSelected(food) && <Check color="#f97316" size={20} />}
-                  </label>
-                ))}
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="flex overflow-x-auto gap-2 mb-5 pb-2 scrollbar-hide">
-                {Object.keys(foodCategories).map(category => (
-                  <button
-                    key={category}
-                    onClick={() => setSelectedCategory(category)}
-                    className={`kondate-category-btn ${selectedCategory === category ? 'selected' : ''}`}
-                    style={selectedCategory === category 
-                      ? (preferenceMode === 'likes' ? { background: 'linear-gradient(90deg, #4ade80, #10b981)', color: 'white' } : { background: 'linear-gradient(90deg, #fb7185, #ec4899)', color: 'white' })
-                      : {}}
-                  >
-                    {category}
-                  </button>
-                ))}
-              </div>
-
-              <div className="grid grid-cols-2 gap-3 max-h-80 overflow-y-auto">
-                {foodCategories[selectedCategory].map(food => (
-                  <label
-                    key={food}
-                    className={`kondate-food-card ${isSelected(food) ? `selected ${preferenceMode}` : ''}`}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={isSelected(food)}
-                      onChange={() => toggleFood(food)}
-                      className="sr-only"
-                    />
-                    <span className="flex-1 font-medium text-gray-800">{food}</span>
-                    {isSelected(food) && (
-                      <Check color={preferenceMode === 'likes' ? '#22c55e' : '#ef4444'} size={20} />
-                    )}
-                  </label>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
-
-        {(preferences.likes.length > 0 || preferences.dislikes.length > 0 || preferences.allergies.length > 0) && (
-          <div className="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-200 p-5 rounded-3xl shadow-sm">
-            <h3 className="text-lg font-bold mb-3 text-purple-900">選択中</h3>
-            
-            {preferences.likes.length > 0 && (
-              <div className="mb-3">
-                <div className="text-sm text-green-700 font-medium mb-2">好きな食材 ({preferences.likes.length})</div>
-                <div className="flex flex-wrap gap-2">
-                  {preferences.likes.map((item, i) => (
-                    <span key={i} className="bg-white border-2 border-green-300 px-3 py-1.5 rounded-full text-sm flex items-center gap-1.5 shadow-sm">
-                      {item}
-                      <X
-                        size={14}
-                        className="cursor-pointer text-green-600 hover:text-green-800"
-                        onClick={() => setPreferences({...preferences, likes: preferences.likes.filter((_, idx) => idx !== i)})}
-                      />
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {preferences.dislikes.length > 0 && (
-              <div className="mb-3">
-                <div className="text-sm text-red-700 font-medium mb-2">苦手な食材 ({preferences.dislikes.length})</div>
-                <div className="flex flex-wrap gap-2">
-                  {preferences.dislikes.map((item, i) => (
-                    <span key={i} className="bg-white border-2 border-red-300 px-3 py-1.5 rounded-full text-sm flex items-center gap-1.5 shadow-sm">
-                      {item}
-                      <X
-                        size={14}
-                        className="cursor-pointer text-red-600 hover:text-red-800"
-                        onClick={() => setPreferences({...preferences, dislikes: preferences.dislikes.filter((_, idx) => idx !== i)})}
-                      />
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {preferences.allergies.length > 0 && (
-              <div>
-                <div className="text-sm text-orange-700 font-medium mb-2">🚨 アレルギー除外 ({preferences.allergies.length})</div>
-                <div className="flex flex-wrap gap-2">
-                  {preferences.allergies.map((item, i) => (
-                    <span key={i} className="bg-white border-2 border-orange-400 px-3 py-1.5 rounded-full text-sm flex items-center gap-1.5 shadow-sm">
-                      {item}
-                      <X
-                        size={14}
-                        className="cursor-pointer text-orange-600 hover:text-orange-800"
-                        onClick={() => setPreferences({...preferences, allergies: preferences.allergies.filter((_, idx) => idx !== i)})}
-                      />
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-    );
-  };
-
   // ホームページ
   const HomePage = () => {
     const totalSelectedCost = 
@@ -1080,9 +687,9 @@ JSONフォーマットで、以下の構造で返してください（JSON以外
                   今日の献立
                 </h3>
                 <div className="space-y-2 text-sm mb-4 bg-white/50 backdrop-blur p-3 rounded-xl">
-                  {selectedMenus.breakfast && <div className="flex items-center gap-2"><span className="text-lg">🌅</span> {selectedMenus.breakfast.name}</div>}
-                  {selectedMenus.lunch && <div className="flex items-center gap-2"><span className="text-lg">☀️</span> {selectedMenus.lunch.name}</div>}
-                  {selectedMenus.dinner && <div className="flex items-center gap-2"><span className="text-lg">🌙</span> {selectedMenus.dinner.name}</div>}
+                  {selectedMenus.breakfast && <div className="flex items-center gap-2"><span className="text-lg">🌅</span><span className="font-semibold text-orange-800">朝食：</span>{selectedMenus.breakfast.name}</div>}
+                  {selectedMenus.lunch && <div className="flex items-center gap-2"><span className="text-lg">☀️</span><span className="font-semibold text-orange-800">昼食：</span>{selectedMenus.lunch.name}</div>}
+                  {selectedMenus.dinner && <div className="flex items-center gap-2"><span className="text-lg">🌙</span><span className="font-semibold text-orange-800">夕食：</span>{selectedMenus.dinner.name}</div>}
                 </div>
                 <div className="text-2xl font-black text-orange-800 mb-4">
                   合計 ¥{totalSelectedCost.toLocaleString()}
@@ -1203,7 +810,21 @@ JSONフォーマットで、以下の構造で返してください（JSON以外
   };
 
   // 買い物リストページ
-  const ShoppingPage = () => (
+  const ShoppingPage = () => {
+    const [selectedForExpense, setSelectedForExpense] = useState(() => new Set());
+    const toggleSelect = (i) => {
+      setSelectedForExpense(prev => {
+        const next = new Set(prev);
+        if (next.has(i)) next.delete(i);
+        else next.add(i);
+        return next;
+      });
+    };
+    const selectAll = () => setSelectedForExpense(new Set(shoppingList.map((_, i) => i)));
+    const selectedItems = shoppingList.filter((_, i) => selectedForExpense.has(i));
+    const selectedTotal = selectedItems.reduce((sum, item) => sum + (item.estimatedPrice || 0), 0);
+
+    return (
     <div className="p-6 space-y-6 pb-28">
       <div className="flex items-center gap-3">
         <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg" style={{ background: 'linear-gradient(135deg, #6366f1, #3b82f6)' }}>
@@ -1219,30 +840,66 @@ JSONフォーマットで、以下の構造で返してください（JSON以外
             <div className="text-5xl font-black text-indigo-700">¥{shoppingTotal.toLocaleString()}</div>
           </div>
 
+          <div className="flex gap-3 mb-2">
+            <button onClick={selectAll} className="text-sm text-indigo-600 font-semibold hover:underline">
+              全選択
+            </button>
+            <span className="text-sm text-gray-500">家計簿に記録するものを選んでください</span>
+          </div>
+
           <div className="bg-white border-2 border-gray-100 rounded-3xl shadow-sm overflow-hidden divide-y-2 divide-gray-50">
             {shoppingList.map((item, i) => (
-              <div key={i} className="p-5">
-                <div className="flex justify-between items-start mb-2">
-                  <div className="flex-1">
-                    <div className="font-bold text-lg text-gray-800">{item.item}</div>
-                    <div className="text-sm text-gray-600 mt-0.5">{item.amount}</div>
-                    {item.usedInDays && item.usedInDays.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 mt-2">
-                        {item.usedInDays.map((day, idx) => (
-                          <span key={idx} className="text-xs bg-indigo-100 text-indigo-700 px-2.5 py-1 rounded-full font-medium border border-indigo-200">
-                            {day}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                  <div className="text-right ml-4">
-                    <div className="font-black text-indigo-600 text-xl">¥{item.estimatedPrice}</div>
+              <label key={i} className={`flex items-start gap-3 p-5 cursor-pointer hover:bg-indigo-50/50 ${selectedForExpense.has(i) ? 'bg-indigo-50' : ''}`}>
+                <input
+                  type="checkbox"
+                  checked={selectedForExpense.has(i)}
+                  onChange={() => toggleSelect(i)}
+                  className="mt-1 w-5 h-5 accent-indigo-600"
+                />
+                <div className="flex-1 min-w-0">
+                  <div className="flex justify-between items-start">
+                    <div className="flex-1">
+                      <div className="font-bold text-lg text-gray-800">{item.item}</div>
+                      <div className="text-sm text-gray-600 mt-0.5">{item.amount}</div>
+                      {item.usedInDays && item.usedInDays.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mt-2">
+                          {item.usedInDays.map((day, idx) => (
+                            <span key={idx} className="text-xs bg-indigo-100 text-indigo-700 px-2.5 py-1 rounded-full font-medium border border-indigo-200">
+                              {day}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <div className="text-right ml-4">
+                      <div className="font-black text-indigo-600 text-xl">¥{item.estimatedPrice}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </label>
             ))}
           </div>
+
+          {selectedItems.length > 0 && (
+            <button
+              onClick={() => {
+                const newExpense = {
+                  id: Date.now(),
+                  amount: selectedTotal,
+                  date: new Date().toISOString(),
+                  items: selectedItems
+                };
+                setExpenses([newExpense, ...expenses]);
+                setShoppingList(shoppingList.filter((_, i) => !selectedForExpense.has(i)));
+                setSelectedForExpense(new Set());
+                alert(`${selectedItems.length}点（¥${selectedTotal.toLocaleString()}）を家計簿に記録しました！`);
+              }}
+              className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-4 rounded-2xl font-bold shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2"
+            >
+              <Check size={22} color="white" strokeWidth={2.5} />
+              選択分（{selectedItems.length}点・¥{selectedTotal.toLocaleString()}）を家計簿へ
+            </button>
+          )}
 
           <button
             onClick={() => {
@@ -1254,12 +911,13 @@ JSONフォーマットで、以下の構造で返してください（JSON以外
               };
               setExpenses([newExpense, ...expenses]);
               setShoppingList([]);
+              setSelectedForExpense(new Set());
               alert('買い物を記録しました！');
             }}
             className="w-full bg-gradient-to-r from-indigo-500 to-blue-500 text-white py-5 rounded-2xl font-bold shadow-xl hover:shadow-2xl transition-all active:scale-95 flex items-center justify-center gap-2"
           >
             <Check size={24} color="white" strokeWidth={2.5} />
-            買い物完了を記録
+            全リストを買い物完了として記録
           </button>
         </>
       ) : (
@@ -1270,6 +928,7 @@ JSONフォーマットで、以下の構造で返してください（JSON以外
       )}
     </div>
   );
+  };
 
   // ナビゲーション
   const NavBar = () => {
@@ -1327,13 +986,48 @@ JSONフォーマットで、以下の構造で返してください（JSON以外
       </div>
 
       {currentPage === 'home' && <HomePage />}
-      {currentPage === 'fridge' && <FridgePage />}
+      {currentPage === 'fridge' && <FridgePage fridge={fridge} setFridge={setFridge} />}
       {currentPage === 'flyer' && <FlyerPage />}
       {currentPage === 'shopping' && <ShoppingPage />}
       {currentPage === 'account' && <AccountBookPage />}
-      {currentPage === 'settings' && <SettingsPage />}
+      {currentPage === 'settings' && <SettingsPage preferences={preferences} setPreferences={setPreferences} onShowManual={handleShowManual} />}
 
       <NavBar />
+
+      {/* 使い方マニュアルモーダル */}
+      {showManual && (
+        <div 
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto"
+          onClick={() => setShowManual(false)}
+        >
+          <div 
+            className="bg-white rounded-3xl p-6 max-w-lg w-full shadow-2xl max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold text-gray-800">使い方マニュアル</h3>
+              <button onClick={() => setShowManual(false)} className="text-gray-400 hover:text-gray-600">
+                <X size={24} />
+              </button>
+            </div>
+            <div className="space-y-4 text-sm text-gray-700">
+              <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 font-mono text-xs whitespace-pre">
+{`【アプリの流れ】
+設定 → 冷蔵庫/チラシ → ホーム → 献立選択 → 買い物リスト → 家計簿
+
+【各画面】
+• ホーム: 献立提案・選択
+• 冷蔵庫: 食材登録
+• チラシ: 撮影で価格読み取り
+• 買い物: チェックで家計簿へ記録
+• 家計簿: 支出確認
+• 設定: 人数・予算・好み`}
+              </div>
+              <p className="font-semibold">💡 詳細は MANUAL.md をご確認ください</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* レシピサイト選択モーダル */}
       {showRecipeModal && (

@@ -21,13 +21,17 @@
   "devDependencies": {
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^3.4.17",
+    "sharp": "^0.33.5",
+    "to-ico": "^1.1.5"
   },
   "proxy": "http://localhost:3001",
   "scripts": {
     "start": "node server.js",
     "start:dev": "react-scripts start",
     "dev": "concurrently \"npm run start\" \"npm run start:dev\"",
+    "generate-icons": "node scripts/generate-icons.js",
+    "prebuild": "npm run generate-icons",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
