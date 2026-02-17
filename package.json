@@ -23,9 +23,9 @@
   },
   "proxy": "http://localhost:3001",
   "scripts": {
-    "start": "react-scripts start",
-    "start:server": "node server.js",
-    "dev": "concurrently \"npm run start:server\" \"npm run start\"",
+    "start": "node server.js",
+    "start:dev": "react-scripts start",
+    "dev": "concurrently \"npm run start\" \"npm run start:dev\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
