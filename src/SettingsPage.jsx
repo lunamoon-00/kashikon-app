@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Check, X, Settings } from 'lucide-react';
 import foodCategories from './foodCategories';
 
 const SettingsPage = React.memo(({ preferences, setPreferences, onShowManual, selectedCategory, setSelectedCategory, preferenceMode, setPreferenceMode }) => {
-  const [budgetInput, setBudgetInput] = useState(null);
 
   const allergens = [
     '卵', '乳', '小麦', 'そば', '落花生', 'えび', 'かに',
@@ -58,9 +57,13 @@ const SettingsPage = React.memo(({ preferences, setPreferences, onShowManual, se
       <div className="bg-white border-2 border-gray-100 p-5 rounded-3xl shadow-sm">
         <label className="block text-base font-bold mb-3 text-gray-800">何人分？</label>
         <input
+          key={'servings-' + preferences.servings}
           type="number"
-          value={preferences.servings}
-          onChange={(e) => setPreferences(prev => ({...prev, servings: Math.min(10, Math.max(1, parseInt(e.target.value) || 1))}))}
+          defaultValue={preferences.servings}
+          onBlur={(e) => {
+            const val = Math.min(10, Math.max(1, parseInt(e.target.value) || 1));
+            setPreferences(prev => ({...prev, servings: val}));
+          }}
           className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-400 font-semibold"
           style={{ fontSize: '16px' }}
           min="1"
@@ -71,18 +74,13 @@ const SettingsPage = React.memo(({ preferences, setPreferences, onShowManual, se
       <div className="bg-white border-2 border-gray-100 p-5 rounded-3xl shadow-sm">
         <label className="block text-base font-bold mb-3 text-gray-800">月の食費予算（円）</label>
         <input
-          type="number"
+          key={'budget-' + preferences.monthlyBudget}
+          type="text"
           inputMode="numeric"
-          value={budgetInput !== null ? budgetInput : (preferences.monthlyBudget === 0 ? '' : preferences.monthlyBudget)}
-          onChange={(e) => setBudgetInput(e.target.value)}
-          onFocus={(e) => {
-            setBudgetInput(preferences.monthlyBudget === 0 ? '' : String(preferences.monthlyBudget));
-            e.target.select();
-          }}
-          onBlur={() => {
-            const num = budgetInput === '' || budgetInput === null ? 0 : parseInt(String(budgetInput).replace(/\D/g, ''), 10) || 0;
+          defaultValue={preferences.monthlyBudget === 0 ? '' : preferences.monthlyBudget}
+          onBlur={(e) => {
+            const num = parseInt(String(e.target.value).replace(/\D/g, ''), 10) || 0;
             setPreferences(prev => ({...prev, monthlyBudget: num}));
-            setBudgetInput(null);
           }}
           placeholder="例: 50000"
           className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-400 font-semibold"
