@@ -4,8 +4,10 @@ import foodCategories from './foodCategories';
 
 const FridgePage = ({ fridge, setFridge, selectedCategory, setSelectedCategory }) => {
 
-  const addToFridge = (item) => {
-    if (!fridge.find(f => f.item === item)) {
+  const toggleFridge = (item) => {
+    if (fridge.find(f => f.item === item)) {
+      setFridge(fridge.filter(f => f.item !== item));
+    } else {
       setFridge([...fridge, { item, amount: '', addedDate: new Date().toISOString() }]);
     }
   };
@@ -97,9 +99,8 @@ const FridgePage = ({ fridge, setFridge, selectedCategory, setSelectedCategory }
           {foodCategories[selectedCategory].map(food => (
             <button
               key={food}
-              onClick={() => addToFridge(food)}
-              disabled={isInFridge(food)}
-              className="kondate-food-btn"
+              onClick={() => toggleFridge(food)}
+              className={`kondate-food-btn ${isInFridge(food) ? 'kondate-food-btn-active' : ''}`}
             >
               <span className="text-sm font-medium">{food}</span>
               {isInFridge(food) && (

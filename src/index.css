@@ -558,20 +558,24 @@ button:active {
   min-width: 0;
 }
 
-.kondate-food-btn:disabled {
-  background: #f9fafb;
-  border-color: #e5e7eb;
-  color: #9ca3af;
-}
-
-.kondate-food-btn:not(:disabled) {
+.kondate-food-btn {
   background: white;
   border-color: #a5f3fc;
 }
 
-.kondate-food-btn:not(:disabled):hover {
+.kondate-food-btn:hover {
   border-color: #22d3ee;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.kondate-food-btn-active {
+  background: #ecfdf5;
+  border-color: #22c55e;
+}
+
+.kondate-food-btn-active:hover {
+  border-color: #ef4444;
+  background: #fef2f2;
 }
 
 .kondate-card-menu {
